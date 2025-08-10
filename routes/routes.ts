@@ -28,7 +28,9 @@ router.post("/", async (ctx) => {
 
   if (body.type !== "task.completed") return;
 
-  const message = fmt`Tarea ${b}${body.data.chore.name}${b} completada por ${b}${body.data.display_name}${b}`;
+  const taskName = body.data.chore.name.trim();
+
+  const message = fmt`Tarea ${b}${taskName}${b} completada por ${b}${body.data.display_name}${b}`;
   const footer = fmt`#user_${body.data.username} #task_${body.data.chore.id}`;
   const fullMessage = fmt`${message}\n\n${footer}`;
 
