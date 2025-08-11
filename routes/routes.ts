@@ -1,7 +1,7 @@
 import { USERS_ID } from "../env.ts";
 import bot from "../telegram/initBot.ts";
 import { Router } from "@oak/oak/router";
-import { fmt, b } from "@grammyjs/parse-mode";
+import { fmt, b, u } from "@grammyjs/parse-mode";
 import StringWithSuggestions from "../types/stringWithSuggestions.type.ts";
 
 interface RequestBody {
@@ -30,9 +30,9 @@ router.post("/", async (ctx) => {
 
   const taskName = body.data.chore.name.trim();
 
-  const message = fmt`Tarea ${b}${taskName}${b} completada por ${b}${body.data.display_name}${b}`;
+  const message = fmt`${u}${b}${taskName}${b}${u} - ${b}${body.data.display_name}${b}`;
   const footer = fmt`#user_${body.data.username} #task_${body.data.chore.id}`;
-  const fullMessage = fmt`${message}\n\n${footer}`;
+  const fullMessage = fmt`${message}\n${footer}`;
 
   for (const userId of USERS_ID)
     await bot.api.sendMessage(userId, fullMessage.caption, { entities: fullMessage.entities });
