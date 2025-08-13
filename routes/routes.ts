@@ -26,6 +26,8 @@ router.post("/", async (ctx) => {
   const body: RequestBody = await ctx.request.body.json();
   ctx.response.status = 200;
 
+  console.dir(body, { depth: null });
+
   if (body.type !== "task.completed") return;
 
   const taskName = body.data.chore.name.trim();
